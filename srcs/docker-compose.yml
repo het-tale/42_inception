@@ -1,0 +1,82 @@
+version: '3.3'
+
+volumes:
+  mariadb_V:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/het-tale/data/maria_v'
+    labels:
+      my_label: 'mariaDb_v'
+  wordpress_V:
+    driver: local
+    driver_opts:
+      type: 'none' #no storage driver should be used for this volume
+      o: 'bind'
+      device: '/home/het-tale/data/wordpress_v'
+    labels:
+      my_label: 'wordPress_v'
+  nmap_V:
+    driver: local
+    driver_opts:
+      type: 'none' #no storage driver should be used for this volume
+      o: 'bind'
+      device: '/home/het-tale/data/nmap_v'
+    labels:
+      my_label: 'nmap_v'
+
+networks:
+  i-network:
+    ipam:
+      driver: default
+      config:
+      - subnet: 13.37.0.1/16
+
+services:
+  mariadb_het-tale:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    image: mariadb
+    volumes:
+      - mariadb_V:/var/lib/mysql #/home/login/data
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - i-network
+  nginx_het-tale:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    image: nginx
+    restart: always
+    ports:
+      - 443:443
+    depends_on:
+      - wordpress_het-tale
+    networks:
+      - i-network
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress_V:/var/www/html
+  wordpress_het-tale:
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    image: wordpress
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - wordpress_V:/var/www/html
+    depends_on:
+      - mariadb_het-tale
+    networks:
+      - i-network
+  
