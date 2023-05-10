@@ -8,8 +8,7 @@ openssl req -x509 -nodes -days 365	-newkey rsa:2048 \
 	-subj "/CN=het-tale.42.fr"
 
 
-COPY conf/nginx.conf /etc/nginx/sites-available/default
-#COPY  . /home/het-tale/Desktop/nginx_cont
+COPY conf/default.conf /etc/nginx/sites-available/default
 
 EXPOSE 443
 
