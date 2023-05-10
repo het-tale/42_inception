@@ -6,7 +6,7 @@
 #    By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 13:07:27 by het-tale          #+#    #+#              #
-#    Updated: 2023/05/10 13:07:30 by het-tale         ###   ########.fr        #
+#    Updated: 2023/05/10 17:28:54 by het-tale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,3 +26,6 @@ start :
 
 status : 
 	@docker ps
+prune :
+	@docker system prune -a
+re: stop prune up
