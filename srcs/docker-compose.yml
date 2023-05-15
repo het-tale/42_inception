@@ -1,63 +1,44 @@
 version: '3'
 
+volumes:
+  wordpress:
+   driver: local
+   driver_opts:
+     type: none
+     device: /home/het-tale/data/wordpress
+     o: bind
+    
+
+networks:
+  inception:
+    driver: bridge
+  
 services:
   nginx:
     container_name: nginx
-    build: ./requirements/nginx
+    build: ./requirements/nginx/.
+    image: nginx
+    ports:
+     - "443:443"
     depends_on:
       - wordpress
-    ports:
-      - 443:443
     volumes:
-      - wordpress_data:/var/www/html
-    restart: always
+      - wordpress:/var/www/html
     networks:
-      - network
-
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb
-    #volumes allow to store in a persistent disk the content in a local disk
-    #db_data is a volume created by docker directly
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    # in case of problem we restart automatically the container
-    networks:
-      - network
-    restart: always
+       - inception
     env_file:
       - .env
-
+    restart: always
   wordpress:
     container_name: wordpress
-    #Create a depedency between the 2 container, db will be launched before
-    depends_on:
-      - mariadb
-    build:
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
-    restart: always
+    build: ./requirements/wordpress/.
+    image: wordpress
+    # depends_on:
+    #   mariadb
+    volumes:
+      - wordpress:/var/www/html
     env_file:
       - .env
-    volumes:
-      - wordpress_data:/var/www/html
     networks:
-      - network
-
-volumes:
-  mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/het-tale/data/mysql
-      o: bind
-  wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/het-tale/data/wordpress
-      o: bind
-
-networks:
-  network:
-    driver: bridge
+      - inception
+    restart: always
