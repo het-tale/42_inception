@@ -7,6 +7,12 @@ volumes:
      type: none
      device: /home/het-tale/data/wordpress
      o: bind
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/het-tale/data/mariadb
+      o: bind
     
 
 networks:
@@ -33,10 +39,21 @@ services:
     container_name: wordpress
     build: ./requirements/wordpress/.
     image: wordpress
-    # depends_on:
-    #   mariadb
+    depends_on:
+      - mariadb
     volumes:
       - wordpress:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/.
+    image: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
     env_file:
       - .env
     networks:

@@ -40,8 +40,9 @@ mv wp-config-sample.php wp-config.php > /dev/null
 
 
 
-wp plugin update --all --allow-root
-wp theme install twentysixteen --activate --allow-root
+# wp plugin update --all --allow-root
+# wp theme install twentysixteen --activate --allow-root
+wp theme install twentytwentytwo --activate --allow-root
 
 
 mkdir -p /run/php
