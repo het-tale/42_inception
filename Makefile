@@ -6,7 +6,7 @@
 #    By: het-tale <het-tale@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 13:52:08 by het-tale          #+#    #+#              #
-#    Updated: 2023/05/12 13:52:10 by het-tale         ###   ########.fr        #
+#    Updated: 2023/05/16 14:44:35 by het-tale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,3 +30,4 @@ status :
 prune :
 	@docker system prune -a
 re: stop prune up
+#delete volume as well

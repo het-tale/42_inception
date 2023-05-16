@@ -1,15 +1,24 @@
 #!/bin/bash
 export name=$(ls /etc/php/)
 
+
+mkdir -p /var/www/html > /dev/null
+
 cd /var/www/html
 
-# rm -rf *
+
+rm -rf *
+
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar 
+
+chmod +x wp-cli.phar 
+
+mv wp-cli.phar /usr/local/bin/wp
+
 wp core download --allow-root
-    # echo "wp-config-sample.php exist"
-if [ -f './wp-config-sample.php' ]; then
 
 
-    mv wp-config-sample.php wp-config.php > /dev/null
+mv wp-config-sample.php wp-config.php > /dev/null
 
     chmod 777 wp-config.php
 
@@ -26,18 +35,15 @@ if [ -f './wp-config-sample.php' ]; then
                     --allow-root
 
     wp user create $WP_USER $WP_MAIL --role=author --user_pass=$WP_PASS --allow-root
-    # sed -i "s/listen = \/run\/php\/php$name-fpm.sock/listen = 9000/1" /etc/php/$name/fpm/pool.d/www.conf
+    sed -i "s/listen = \/run\/php\/php$name-fpm.sock/listen = 9000/1" /etc/php/$name/fpm/pool.d/www.conf
     
 
-fi
-    sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
+
 
 wp plugin update --all --allow-root
-# wp plugin install redis-cache --activate --allow-root
 wp theme install twentysixteen --activate --allow-root
 
-# wp redis enable --allow-root
-# the /run/php used by PHP-FPM to store process Id.
+
 mkdir -p /run/php
 
 
