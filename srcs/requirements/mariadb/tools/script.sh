@@ -18,4 +18,4 @@ touch db
 
 kill $(cat /var/run/mysqld/mysqld.pid)
 
-mysqld
+# mysqld

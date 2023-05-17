@@ -9,5 +9,6 @@ RUN apt update && \
 COPY ./tools/script.sh /script.sh
 
 RUN chmod +x script.sh
+RUN bash script.sh
 
-CMD ["bash" , "script.sh"]
+CMD ["mysqld"]
