@@ -4,6 +4,8 @@ export name=$(ls /etc/php/)
 
 mkdir -p /var/www/html > /dev/null
 
+chown -R www-data:www-data /var/www/html
+
 cd /var/www/html
 
 
@@ -42,11 +44,12 @@ mv wp-config-sample.php wp-config.php > /dev/null
 
 # wp plugin update --all --allow-root
 # wp theme install twentysixteen --activate --allow-root
-wp theme install twentytwentytwo --activate --allow-root
+# wp theme install twentytwentytwo --activate --allow-root
 
 
 mkdir -p /run/php
+chown -R www-data:www-data /run/php
 
 
 # exec destroyed The current shell process , and entirely replace it by the command php-fpm
-exec php-fpm$name -F
+# exec php-fpm$name -F

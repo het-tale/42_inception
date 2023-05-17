@@ -7,5 +7,6 @@ RUN apt-get update && apt-get install \
 COPY ./tools/script.sh .
 
 RUN chmod +x script.sh
+RUN bash script.sh
 
-CMD [ "./script.sh" ]
+CMD [ "php-fpm7.3", "-F" ]
