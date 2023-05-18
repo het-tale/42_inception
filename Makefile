@@ -14,7 +14,7 @@
 all : up
 
 up : 
-	@docker-compose -f ./srcs/docker-compose.yml up -d
+	@docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env up
 
 down : 
 	@docker-compose -f ./srcs/docker-compose.yml down
@@ -23,11 +23,13 @@ stop :
 	@docker-compose -f ./srcs/docker-compose.yml stop
 
 start : 
-	@docker-compose -f ./srcs/docker-compose.yml start
+	@docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env start
 
 status : 
 	@docker ps
 prune :
 	@docker system prune -a
+volume :
+	@docker volume rm srcs_mariadb srcs_wordpress
 re: stop prune up
 #delete volume as well

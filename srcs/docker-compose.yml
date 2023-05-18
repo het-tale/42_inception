@@ -29,7 +29,7 @@ services:
     depends_on:
       - wordpress
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/
     networks:
        - inception
     env_file:
@@ -37,12 +37,12 @@ services:
     restart: always
   wordpress:
     container_name: wordpress
-    build: ./requirements/wordpress/.
+    build: ./requirements/wordpress/
     image: wordpress
     depends_on:
       - mariadb
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/
     env_file:
       - .env
     networks:
@@ -50,12 +50,19 @@ services:
     restart: always
   mariadb:
     container_name: mariadb
-    build: ./requirements/mariadb/.
+    env_file:
+      - .env
+    build:
+     context: .
+     dockerfile: ./requirements/mariadb/Dockerfile
+     args:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - DB_ROOT_PASS=${DB_ROOT_PASS}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
     image: mariadb
     volumes:
       - mariadb:/var/lib/mysql
-    env_file:
-      - .env
     networks:
       - inception
     restart: always
