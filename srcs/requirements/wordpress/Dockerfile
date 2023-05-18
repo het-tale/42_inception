@@ -9,7 +9,6 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 WORKDIR  /var/www/html/
 
 COPY ./tools/script.sh .
-# COPY .env .env
 
 RUN chmod +x script.sh
 
