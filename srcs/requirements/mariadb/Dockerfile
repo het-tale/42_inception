@@ -11,6 +11,6 @@ ARG DB_USER
 ARG DB_PASS
 
 RUN chmod +x script.sh
-RUN bash script.sh
+RUN ./script.sh
 
 CMD ["mysqld", "--bind-address=0.0.0.0"]
