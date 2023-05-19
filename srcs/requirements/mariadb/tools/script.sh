@@ -12,5 +12,3 @@ touch db
     echo "EXIT" >> db
 
     mysql -h localhost -uroot -p$DB_ROOT_PASS < db
-
-kill $(cat /var/run/mysqld/mysqld.pid)

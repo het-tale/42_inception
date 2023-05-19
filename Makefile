@@ -14,16 +14,16 @@
 all : up
 
 up : 
-	@docker-compose -f ./srcs/docker-compose.yml up
+	@docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env up
 
 down : 
-	@docker-compose -f ./srcs/docker-compose.yml down
+	@docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env down
 
 stop : 
-	@docker-compose -f ./srcs/docker-compose.yml stop
+	@docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env stop
 
 start : 
-	@docker-compose -f ./srcs/docker-compose.yml start
+	@docker-compose -f ./srcs/docker-compose.yml --env-file ./srcs/.env start
 
 status : 
 	@docker ps

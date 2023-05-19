@@ -7,7 +7,7 @@ RUN apt update -y && apt install nginx -y \
         -out /etc/ssl/certs/het-tale-cer.crt \
         -subj "/CN=het-tale.42.fr"
 
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx.conf /etc/nginx/conf.d/
 
 EXPOSE 443
 
