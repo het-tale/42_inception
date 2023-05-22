@@ -28,8 +28,5 @@ start :
 status : 
 	@docker ps
 prune :
-	@docker system prune -a
-volume :
-	@docker volume rm srcs_mariadb srcs_wordpress
+	@docker system prune -a -f
 re: stop prune up
-#delete volume as well
